@@ -68,7 +68,7 @@ paths:
               examples:
                 example:
                   value:
-                    error: Unahthorized
+                    error: Unauthorized
       operationId: login
       requestBody:
         content:
