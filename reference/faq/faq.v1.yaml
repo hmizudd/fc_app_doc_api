@@ -1,0 +1,225 @@
+openapi: 3.0.0
+info:
+  title: よくある質問
+  version: '1.0'
+  description: よくある質問
+  contact:
+    name: FCApp
+servers:
+  - url: 'http://localhost:3000/api'
+    description: Test server
+paths:
+  /faq:
+    get:
+      summary: よくある質問一覧
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  client_faq_list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/client_faq'
+                  staff_faq_list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/staff_faq'
+                  status:
+                    type: string
+                required:
+                  - client_faq_list
+                  - status
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: よくある質問一覧取得
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+      operationId: getFaqList
+    parameters: []
+  '/faq/client/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: よくある質問（顧客）詳細
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  faq:
+                    $ref: '#/components/schemas/client_faq'
+                  status:
+                    type: string
+                required:
+                  - faq
+                  - status
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: よくある質問（顧客）詳細取得
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+      operationId: getFaqClient
+  '/faq/staff/{id}':
+    get:
+      summary: よくある質問（スタッフ）詳細
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  faq:
+                    $ref: '#/components/schemas/staff_faq'
+                  status:
+                    type: string
+                required:
+                  - faq
+                  - status
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: よくある質問（スタッフ）詳細取得
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+      operationId: getFaqStaff
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: よくある質問（スタッフ）ID
+components:
+  schemas:
+    staff_faq:
+      title: よくある質問（スタッフ）
+      x-examples:
+        example:
+          value:
+            id: 1
+            faq_category: スタッフの参加
+            question: 参加予約
+            answer: 毎月15日に配信されるアンケートの回答画面から予約をします。
+      required:
+        - id
+        - faq_category
+        - question
+        - answer
+      properties:
+        id:
+          type: integer
+          description: よくある質問（スタッフ）ID
+        faq_category:
+          type: string
+          description: カテゴリー名
+        question:
+          type: string
+          description: 質問
+        answer:
+          type: string
+          description: 回答
+      description: よくある質問（スタッフ）モデル
+      type: object
+    client_faq:
+      title: よくある質問（顧客）
+      type: object
+      description: よくある質問（顧客）モデル
+      x-examples:
+        example-1:
+          value:
+            id: 1
+            faq_category: 講義
+            question: 講義の予約
+            answer: 講義予約画面から予約をします。
+        example-2:
+          value:
+            id: 2
+            faq_category: イベント
+            question: イベントの予約
+            answer: イベント予約画面から予約をします。
+      properties:
+        id:
+          description: よくある質問（顧客）ID
+          type: integer
+        faq_category:
+          type: string
+          description: カテゴリー名
+        question:
+          type: string
+          description: 質問
+        answer:
+          type: string
+          description: 回答
+      required:
+        - id
+        - faq_category
+        - question
+        - answer
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: Bearer
+      description: JWT

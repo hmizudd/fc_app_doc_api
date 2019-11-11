@@ -1,0 +1,223 @@
+openapi: 3.0.0
+info:
+  title: お知らせ
+  version: '1.0'
+  description: お知らせ
+  contact:
+    name: FCApp
+servers:
+  - url: 'http://localhost:3000/api'
+    description: Test server
+paths:
+  /news:
+    get:
+      summary: お知らせ一覧
+      tags: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  client_news_list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/client_news'
+                  staff_news_list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/staff_news'
+                  status:
+                    type: string
+                required:
+                  - client_news_list
+                  - status
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: |-
+        お知らせ一覧取得
+        2ヶ月前の月初〜現在までの一覧を取得する。
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+      operationId: getNewsList
+    parameters: []
+  '/news/client/{id}':
+    get:
+      summary: お知らせ（顧客）詳細
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  news:
+                    $ref: '#/components/schemas/client_news'
+                  status:
+                    type: string
+                required:
+                  - news
+                  - status
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: お知らせ（顧客）詳細取得
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+      operationId: getNewsClient
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: お知らせ（顧客）ID
+  '/news/staff/{id}':
+    get:
+      summary: お知らせ（スタッフ）詳細
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  news:
+                    $ref: '#/components/schemas/staff_news'
+                  status:
+                    type: string
+                required:
+                  - news
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: お知らせ（スタッフ）詳細取得
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+      operationId: getNewsStaff
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+components:
+  schemas:
+    client_news:
+      title: お知らせ（顧客）
+      type: object
+      description: お知らせ（顧客）モデル
+      x-examples:
+        example:
+          value:
+            id: 1
+            published_at: '2019-01-03 03:00'
+            subject: お知らせ1
+            content: お知らせ1です。
+      properties:
+        id:
+          type: integer
+          description: お知らせ（顧客）ID
+        published_at:
+          type: string
+          description: 配信日時
+        subject:
+          type: string
+          description: 件名
+        content:
+          type: string
+          description: お知らせ内容
+          maxLength: 1000
+      required:
+        - id
+        - published_at
+        - subject
+        - content
+    staff_news:
+      title: お知らせ（スタッフ）
+      required:
+        - id
+        - published_at
+        - subject
+        - content
+      properties:
+        id:
+          type: integer
+          description: お知らせ（スタッフ）ID
+        published_at:
+          type: string
+          description: 配信日時
+        subject:
+          type: string
+          description: 件名
+        content:
+          type: string
+          description: お知らせ内容
+          maxLength: 1000
+      description: お知らせ（スタッフ）モデル
+      x-examples:
+        example:
+          value:
+            id: 2
+            published_at: '2019-11-23 13:00'
+            subject: スタッフのお知らせ1
+            content: スタッフのお知らせ1です。
+      type: object
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: Bearer
+      description: JWT

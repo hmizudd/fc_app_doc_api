@@ -1,0 +1,154 @@
+openapi: 3.0.0
+info:
+  title: メールアドレス登録
+  version: '1.0'
+  description: メールアドレス登録処理
+  contact:
+    name: FCApp
+servers:
+  - url: 'http://localhost:3000/api'
+    description: TestServer
+paths:
+  /register:
+    post:
+      summary: メールアドレス登録
+      tags: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                  - status
+              examples:
+                example:
+                  value:
+                    status: success
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  messages:
+                    type: object
+                required:
+                  - status
+                  - messages
+      description: メールアドレス登録
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client-register'
+            examples:
+              example:
+                value:
+                  login_id: User
+                  password: Passw0rd
+                  last_name: 山田
+                  first_name: 太郎
+                  last_name_kana: やまだ
+                  first_name_kana: たろう
+                  email: tyamada@example.com
+                  birth_date: '1980-01-20'
+                  gender: 0
+                  learned_seminar_type: 0
+                  office_code: tokyo
+      operationId: register
+components:
+  schemas:
+    Client-register:
+      title: 顧客登録情報
+      type: object
+      description: 顧客登録情報
+      properties:
+        login_id:
+          type: string
+          description: ログインID
+          maxLength: 20
+        password:
+          type: string
+          format: password
+          maxLength: 20
+          description: パスワード
+        last_name:
+          type: string
+          description: 姓
+        first_name:
+          type: string
+          description: 名
+        last_name_kana:
+          type: string
+          description: 姓（かな）
+        first_name_kana:
+          type: string
+          description: 名（かな）
+        email:
+          type: string
+          format: email
+          description: メールアドレス
+        birth_date:
+          type: string
+          description: 生年月日
+        gender:
+          type: integer
+          description: 性別
+        learned_seminar_type:
+          type: integer
+          description: セミナーを知ったきっかけ
+        introducer:
+          type: string
+          description: 紹介者
+        office_code:
+          type: string
+          description: 事業所コード
+      required:
+        - login_id
+        - password
+        - last_name
+        - first_name
+        - last_name_kana
+        - first_name_kana
+        - email
+        - birth_date
+        - gender
+        - learned_seminar_type
+        - office_code
+      x-examples:
+        example-1:
+          value:
+            login_id: User
+            password: Passw0rd
+            last_name: 山田
+            first_name: 太郎
+            last_name_kana: やまだ
+            first_name_kana: たろう
+            email: tyamada@example.com
+            birth_date: '1980-01-20'
+            gender: 0
+            learned_seminar_type: 0
+            office_code: tokyo
+        example-2:
+          value:
+            login_id: User
+            password: Passw0rd
+            last_name: 山田
+            first_name: 太郎
+            last_name_kana: やまだ
+            first_name_kana: たろう
+            email: tyamada@example.com
+            birth_date: '1980-01-20'
+            gender: 2
+            learned_seminar_type: 2
+            introducer: 佐藤花子
+            office_code: tokyo
+  securitySchemes: {}

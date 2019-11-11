@@ -1,0 +1,407 @@
+openapi: 3.0.0
+info:
+  title: 講義・イベント
+  version: '1.0'
+  description: 講義・イベント
+  contact:
+    name: FCApp
+servers:
+  - url: 'http://localhost:3000/api'
+paths:
+  /lecture:
+    get:
+      summary: 講義予約一覧
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lecture_list:
+                    type: array
+                    description: 予約受付中の講義一覧
+                    items:
+                      $ref: '#/components/schemas/seminar'
+                  status:
+                    type: string
+                required:
+                  - lecture_list
+                  - status
+              examples:
+                example:
+                  value:
+                    lecture_list:
+                      - id: 1
+                        event_date: '2019-11-01'
+                        start_time: '09:00'
+                        end_time: '12:00'
+                        category: 午前
+                        name: ファイナンスセミナー
+                        amount: 11000
+                      - id: 2
+                        event_date: '2019-11-05'
+                        start_time: '13:00'
+                        end_time: '15:00'
+                        category: 午後
+                        name: ファイナンスセミナー
+                        amount: 9800
+                    status: success
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: 講義一覧取得
+      operationId: getLectureList
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+    parameters: []
+  /serminar_reserve:
+    post:
+      summary: 講義・イベント予約
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                  - status
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: 講義・イベント予約
+      operationId: postSeminarReserve
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: 講義・イベントID
+              required:
+                - id
+    parameters: []
+  /reserved_seminar:
+    get:
+      summary: 予約済み講義・イベント一覧
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  seminar_list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/seminar'
+                  status:
+                    type: string
+                required:
+                  - seminar_list
+                  - status
+              examples:
+                example:
+                  value:
+                    seminar_list:
+                      - id: 1
+                        event_date: '2019-11-01'
+                        start_time: '09:00'
+                        end_time: '12:00'
+                        category: 午前
+                        name: ファイナンスセミナー
+                        type: 1
+                      - id: 3
+                        event_date: '2019-11-10'
+                        start_time: '13:00'
+                        end_time: '15:00'
+                        name: 投資イベント
+                        type: 2
+                    status: success
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: 予約済み講義・イベント一覧取得
+      operationId: getReservedSeminarList
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+  /seminar_cancel:
+    put:
+      summary: 講義・イベントキャンセル
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                  - status
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: 講義・イベントキャンセル
+      operationId: putSeminarCancel
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+    parameters: []
+  /seminar_history:
+    get:
+      summary: 履歴
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  seminar_list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/seminar'
+                  status:
+                    type: string
+                required:
+                  - seminar_list
+                  - status
+              examples:
+                example:
+                  value:
+                    seminar_list:
+                      - id: 1
+                        event_date: '2019-11-01'
+                        start_time: '09:00'
+                        end_time: '12:00'
+                        category: 午前
+                        name: ファイナンスセミナー
+                        type: 1
+                      - id: 3
+                        event_date: '2019-11-10'
+                        start_time: '13:00'
+                        end_time: '15:00'
+                        name: 投資イベント
+                        type: 2
+                    status: success
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: 講義・イベント参加履歴取得
+      operationId: getSeminarHistory
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+  /event:
+    get:
+      summary: イベント予約一覧
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  event_list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/seminar'
+                  status:
+                    type: string
+                required:
+                  - event_list
+                  - status
+              examples:
+                example:
+                  value:
+                    event_list:
+                      - id: 3
+                        event_date: '2019-11-01'
+                        start_time: '09:00'
+                        end_time: '12:00'
+                        name: 相談会
+                        amount: 11000
+                      - id: 4
+                        event_date: '2019-11-05'
+                        start_time: '13:00'
+                        end_time: '15:00'
+                        name: 相談会
+                        amount: 9800
+                    status: success
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      description: イベント予約一覧取得
+      operationId: getEventList
+      parameters:
+        - schema: {}
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+components:
+  schemas:
+    seminar:
+      title: 講義・イベント
+      type: object
+      description: 講義・イベントモデル
+      x-examples:
+        example-講義:
+          value:
+            id: 1
+            event_date: '2019-11-01'
+            start_time: '09:00'
+            end_time: '13:00'
+            category: 体験
+            name: 講義体験会
+            amount: 9800
+            type: 1
+        example-イベント:
+          value:
+            id: 2
+            event_date: '2019-11-10'
+            start_time: '12:00'
+            end_time: '16:00'
+            name: 投資イベント
+            amount: 9800
+            type: 2
+      properties:
+        id:
+          type: integer
+          description: 講義・イベントID
+        event_date:
+          type: string
+          description: 開催日
+        start_time:
+          type: string
+          description: 開始時刻
+        end_time:
+          type: string
+          description: 終了時刻
+        category:
+          type: string
+          description: カテゴリー
+        name:
+          type: string
+          description: 講義・イベント名
+        amount:
+          type: number
+          description: 金額
+        type:
+          type: integer
+          description: 講義・イベント区分
+      required:
+        - id
+        - event_date
+        - start_time
+        - end_time
+        - name
+        - type
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: Bearer
+      description: JWT
