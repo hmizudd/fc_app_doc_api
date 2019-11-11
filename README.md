@@ -1,2 +1,8 @@
-# fc_app_api
-FCアプリ API仕様
+# FC APP API Document
+
+## Generate tools
+
+* OpenApi(Swagger)
+* Stoplight Studio
+* Swagger UI (generate html)
+* Prism (mock server)
