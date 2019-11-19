@@ -12,7 +12,8 @@ paths:
   /news:
     get:
       summary: お知らせ一覧
-      tags: []
+      tags:
+        - News
       responses:
         '200':
           description: OK
@@ -60,100 +61,6 @@ paths:
           required: true
       operationId: getNewsList
     parameters: []
-  '/news/client/{id}':
-    get:
-      summary: お知らせ（顧客）詳細
-      tags: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  news:
-                    $ref: '#/components/schemas/client_news'
-                  status:
-                    type: string
-                required:
-                  - news
-                  - status
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  error:
-                    type: string
-                required:
-                  - status
-                  - error
-      description: お知らせ（顧客）詳細取得
-      parameters:
-        - schema: {}
-          in: header
-          name: Authorization
-          description: 'Bearer {$token}'
-          required: true
-      operationId: getNewsClient
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-        description: お知らせ（顧客）ID
-  '/news/staff/{id}':
-    get:
-      summary: お知らせ（スタッフ）詳細
-      tags: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  news:
-                    $ref: '#/components/schemas/staff_news'
-                  status:
-                    type: string
-                required:
-                  - news
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  error:
-                    type: string
-                required:
-                  - status
-                  - error
-      description: お知らせ（スタッフ）詳細取得
-      parameters:
-        - schema: {}
-          in: header
-          name: Authorization
-          description: 'Bearer {$token}'
-          required: true
-      operationId: getNewsStaff
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
 components:
   schemas:
     client_news:

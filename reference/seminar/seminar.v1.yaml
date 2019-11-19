@@ -11,7 +11,6 @@ paths:
   /lecture:
     get:
       summary: 講義予約一覧
-      tags: []
       responses:
         '200':
           description: OK
@@ -71,11 +70,14 @@ paths:
           name: Authorization
           description: 'Bearer {$token}'
           required: true
+      tags:
+        - Seminar
     parameters: []
   /serminar_reserve:
     post:
       summary: 講義・イベント予約
-      tags: []
+      tags:
+        - Seminar
       responses:
         '200':
           description: OK
@@ -125,7 +127,8 @@ paths:
   /reserved_seminar:
     get:
       summary: 予約済み講義・イベント一覧
-      tags: []
+      tags:
+        - Seminar
       responses:
         '200':
           description: OK
@@ -220,11 +223,14 @@ paths:
           name: Authorization
           description: 'Bearer {$token}'
           required: true
+      tags:
+        - Seminar
     parameters: []
   /seminar_history:
     get:
       summary: 履歴
-      tags: []
+      tags:
+        - Seminar
       responses:
         '200':
           description: OK
@@ -285,7 +291,6 @@ paths:
   /event:
     get:
       summary: イベント予約一覧
-      tags: []
       responses:
         '200':
           description: OK
@@ -342,6 +347,8 @@ paths:
           name: Authorization
           description: 'Bearer {$token}'
           required: true
+      tags:
+        - Seminar
 components:
   schemas:
     seminar:

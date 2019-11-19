@@ -12,7 +12,8 @@ paths:
   /survey:
     get:
       summary: アンケートURLリスト
-      tags: []
+      tags:
+        - Survey
       responses:
         '200':
           description: OK

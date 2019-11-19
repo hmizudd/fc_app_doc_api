@@ -12,7 +12,8 @@ paths:
   /login:
     post:
       summary: ログイン
-      tags: []
+      tags:
+        - Authenticate
       responses:
         '200':
           description: OK
@@ -64,7 +65,7 @@ paths:
               examples:
                 example:
                   value:
-                    error: Unahthorized
+                    error: Unauthorized
       operationId: login
       requestBody:
         content:
@@ -104,7 +105,7 @@ components:
     Client-loggedin:
       title: 顧客情報
       type: object
-      description: ログインした顧客情報
+      description: ログインした顧客情報モデル
       properties:
         id:
           type: integer

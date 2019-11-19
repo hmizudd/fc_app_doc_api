@@ -213,102 +213,6 @@ paths:
           required: true
       operationId: getNewsList
     parameters: []
-  '/news/client/{id}':
-    get:
-      summary: お知らせ（顧客）詳細
-      tags:
-        - News
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  news:
-                    $ref: '#/components/schemas/client_news'
-                  status:
-                    type: string
-                required:
-                  - news
-                  - status
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  error:
-                    type: string
-                required:
-                  - status
-                  - error
-      description: お知らせ（顧客）詳細取得
-      parameters:
-        - schema: {}
-          in: header
-          name: Authorization
-          description: 'Bearer {$token}'
-          required: true
-      operationId: getNewsClient
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-        description: お知らせ（顧客）ID
-  '/news/staff/{id}':
-    get:
-      summary: お知らせ（スタッフ）詳細
-      tags:
-        - News
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  news:
-                    $ref: '#/components/schemas/staff_news'
-                  status:
-                    type: string
-                required:
-                  - news
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  error:
-                    type: string
-                required:
-                  - status
-                  - error
-      description: お知らせ（スタッフ）詳細取得
-      parameters:
-        - schema: {}
-          in: header
-          name: Authorization
-          description: 'Bearer {$token}'
-          required: true
-      operationId: getNewsStaff
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
 
   /faq:
     get:
@@ -327,10 +231,6 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/client_faq'
-                  staff_faq_list:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/staff_faq'
                   status:
                     type: string
                 required:
@@ -407,55 +307,6 @@ paths:
           description: 'Bearer {$token}'
           required: true
       operationId: getFaqClient
-  '/faq/staff/{id}':
-    get:
-      summary: よくある質問（スタッフ）詳細
-      tags:
-        - FAQ
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  faq:
-                    $ref: '#/components/schemas/staff_faq'
-                  status:
-                    type: string
-                required:
-                  - faq
-                  - status
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  error:
-                    type: string
-                required:
-                  - status
-                  - error
-      description: よくある質問（スタッフ）詳細取得
-      parameters:
-        - schema: {}
-          in: header
-          name: Authorization
-          description: 'Bearer {$token}'
-          required: true
-      operationId: getFaqStaff
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-        description: よくある質問（スタッフ）ID
 
   /survey:
     get:
@@ -856,6 +707,69 @@ paths:
       tags:
         - Seminar
 
+  /contact:
+    get:
+      summary: お問い合わせ
+      tags:
+        - Contact
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inquiry_email:
+                    type: string
+                    description: お問い合わせ先メールアドレス
+                  category_list:
+                    type:
+                      - string
+                      - array
+                    description: カテゴリーリスト
+                    items:
+                      $ref: '#/components/schemas/category_list'
+                  status:
+                    type: string
+                required:
+                  - inquiry_email
+                  - category_list
+                  - status
+              examples:
+                example:
+                  value:
+                    inquiry_email: inquiry@example.com
+                    category_list:
+                      - 講義予約
+                      - 講義のキャンセル
+                      - イベント予約
+                    status: success
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      operationId: getContact
+      description: お問い合わせ情報取得API
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+      requestBody: {}
+
 components:
   schemas:
     Client-loggedin:
@@ -1037,35 +951,6 @@ components:
             subject: スタッフのお知らせ1
             content: スタッフのお知らせ1です。
       type: object
-    staff_faq:
-      title: よくある質問（スタッフ）
-      x-examples:
-        example:
-          value:
-            id: 1
-            faq_category: スタッフの参加
-            question: 参加予約
-            answer: 毎月15日に配信されるアンケートの回答画面から予約をします。
-      required:
-        - id
-        - faq_category
-        - question
-        - answer
-      properties:
-        id:
-          type: integer
-          description: よくある質問（スタッフ）ID
-        faq_category:
-          type: string
-          description: カテゴリー名
-        question:
-          type: string
-          description: 質問
-        answer:
-          type: string
-          description: 回答
-      description: よくある質問（スタッフ）モデル
-      type: object
     client_faq:
       title: よくある質問（顧客）
       type: object
@@ -1157,4 +1042,17 @@ components:
         - end_time
         - name
         - type
+    category_list:
+      title: お問い合わせカテゴリー
+      type: object
+      description: お問い合わせカテゴリーモデル
+      properties:
+        name:
+          type: string
+          description: カテゴリー名
+      required:
+        - name
+      x-examples:
+        example:
+          name: 講義予約について
 

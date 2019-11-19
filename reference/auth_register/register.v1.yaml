@@ -12,7 +12,8 @@ paths:
   /register:
     post:
       summary: メールアドレス登録
-      tags: []
+      tags:
+        - Authenticate
       responses:
         '201':
           description: Created
@@ -69,7 +70,7 @@ components:
     Client-register:
       title: 顧客登録情報
       type: object
-      description: 顧客登録情報
+      description: 顧客登録情報モデル
       properties:
         login_id:
           type: string

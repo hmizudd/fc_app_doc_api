@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  title: contact
+  version: '1.0'
+  contact:
+    name: FCApp
+servers:
+  - url: 'http://localhost:3000/api'
+    description: Test server
+paths:
+  /contact:
+    get:
+      summary: お問い合わせ
+      tags:
+        - Contact
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inquiry_email:
+                    type: string
+                    description: お問い合わせ先メールアドレス
+                  category_list:
+                    type:
+                      - string
+                      - array
+                    description: カテゴリーリスト
+                    items:
+                      $ref: '#/components/schemas/category_list'
+                  status:
+                    type: string
+                required:
+                  - inquiry_email
+                  - category_list
+                  - status
+              examples:
+                example:
+                  value:
+                    inquiry_email: inquiry@example.com
+                    category_list:
+                      - 講義予約
+                      - 講義のキャンセル
+                      - イベント予約
+                    status: success
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+                required:
+                  - status
+                  - error
+      operationId: getContact
+      description: お問い合わせ情報取得API
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {$token}'
+          required: true
+      requestBody: {}
+components:
+  schemas:
+    category_list:
+      title: お問い合わせカテゴリー
+      type: object
+      description: お問い合わせカテゴリーモデル
+      properties:
+        name:
+          type: string
+          description: カテゴリー名
+      required:
+        - name
+      x-examples:
+        example:
+          name: 講義予約について
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: Bearer
+      description: JWT
