@@ -724,12 +724,10 @@ paths:
                     type: string
                     description: お問い合わせ先メールアドレス
                   category_list:
-                    type:
-                      - string
-                      - array
+                    type: array
                     description: カテゴリーリスト
                     items:
-                      $ref: '#/components/schemas/category_list'
+                      $ref: '#/components/schemas/faq_category'
                   status:
                     type: string
                 required:
@@ -768,7 +766,6 @@ paths:
           name: Authorization
           description: 'Bearer {$token}'
           required: true
-      requestBody: {}
 
 components:
   schemas:
@@ -1042,7 +1039,7 @@ components:
         - end_time
         - name
         - type
-    category_list:
+    faq_category:
       title: お問い合わせカテゴリー
       type: object
       description: お問い合わせカテゴリーモデル
