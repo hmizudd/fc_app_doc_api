@@ -1,9 +1,10 @@
 openapi: 3.0.0
 info:
-  title: contact
+  title: お問い合わせ
   version: '1.0'
   contact:
     name: FCApp
+  description: お問い合わせ
 servers:
   - url: 'http://localhost:3000/api'
     description: Test server
@@ -25,12 +26,10 @@ paths:
                     type: string
                     description: お問い合わせ先メールアドレス
                   category_list:
-                    type:
-                      - string
-                      - array
+                    type: array
                     description: カテゴリーリスト
                     items:
-                      $ref: '#/components/schemas/category_list'
+                      $ref: '#/components/schemas/faq_category'
                   status:
                     type: string
                 required:
@@ -69,10 +68,9 @@ paths:
           name: Authorization
           description: 'Bearer {$token}'
           required: true
-      requestBody: {}
 components:
   schemas:
-    category_list:
+    faq_category:
       title: お問い合わせカテゴリー
       type: object
       description: お問い合わせカテゴリーモデル
