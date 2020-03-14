@@ -487,10 +487,31 @@ paths:
               type: object
               properties:
                 id:
-                  type: integer
-                  description: 講義・イベントID
+                  type: array
+                  description: '講義・イベントスケジュールID'
+                  items: {}
+                type:
+                  type: array
+                  description: '支払方法(0:無料,1:現金,2:カード)'
+                  items: {}
               required:
                 - id
+                - type
+            examples:
+              Multiple:
+                value:
+                  id:
+                    - 20
+                    - 18
+                  type:
+                    - 0
+                    - 2
+              Single:
+                value:
+                  id:
+                    - 4
+                  type:
+                    - 1
     parameters: []
   /reserved_seminar:
     get:
@@ -717,6 +738,51 @@ paths:
           required: true
       tags:
         - Seminar
+  /result_payment:
+    get:
+      summary: 決済APIキックURL
+      tags:
+        - Seminar
+      responses:
+        '301':
+          description: 'アプリにリダイレクト("finalcial-colleage://card?")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Result:
+                    type: string
+                    description: 決済結果
+                  itemId:
+                    type: string
+                    description: 商品ID
+                required:
+                  - Result
+                  - itemId
+      operationId: getResultPayment
+      description: 決済APIのキックURL
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Result:
+                  type: string
+                  description: 決済結果
+                  example: '"OK":決済成功, "NG":決済失敗'
+                  minLength: 2
+                  maxLength: 2
+                itemId:
+                  type: string
+                  maxLength: 100
+                  description: 商品ID
+              required:
+                - Result
+                - itemId
+        description: ''
 
   /contact:
     get:
