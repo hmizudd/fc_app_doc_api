@@ -614,6 +614,17 @@ paths:
           required: true
       tags:
         - Seminar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: 講義・イベントID
+              required:
+                - id
     parameters: []
   /seminar_history:
     get:
