@@ -387,24 +387,21 @@ paths:
       tags:
         - Seminar
       responses:
-        '301':
-          description: 'アプリにリダイレクト("finalcial-colleage://card?")'
+        '200':
+          description: OK
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  Result:
+                  status:
                     type: string
-                    description: 決済結果
-                  itemId:
-                    type: string
-                    description: 商品ID
                 required:
-                  - Result
-                  - itemId
+                  - status
       operationId: getResultPayment
-      description: 決済APIのキックURL
+      description: |-
+        決済APIのキックURL
+        決済側には200を返す必要がある。
       parameters: []
       requestBody:
         content:

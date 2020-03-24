@@ -51,8 +51,14 @@ paths:
                         event_date: '2019-11-01'
                         start_time: '09:00'
                         end_time: '12:00'
+                        category: ''
                     staff_survey_list:
                       - url: 'http://localhost:8080/api/staff_survey/10'
+                        name: スタッフ用アンケート
+                        event_date: ''
+                        start_time: ''
+                        end_time: ''
+                        category: ''
                     status: success
         '401':
           description: Unauthorized
