@@ -136,10 +136,15 @@ paths:
                   status:
                     type: string
                   messages:
-                    type: object
+                    type: string
+                    description: エラーメッセージ
                 required:
                   - status
-                  - messages
+              examples:
+                example:
+                  value:
+                    status: error
+                    messages: ログインIDは必須入力です。
       description: メールアドレス登録
       requestBody:
         content:
