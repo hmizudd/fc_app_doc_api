@@ -47,6 +47,18 @@ paths:
                       password: $2y$10$DHcchiEiAOvIbwmFunVH2.aYB4IxXbZzFeNcl0f267VuOhfxUI.ju
                       email: tyamada@example.com
                       full_name: 山田 太郎
+                    first_survey_url: 'http://localhost:8080/api/first_survey/1'
+                    status: success
+                example-No first survey:
+                  value:
+                    access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hc29iaS50ZXN0XC9hcGlcL2FkbWluXC9sb2dpbiIsImlhdCI6MTU3MjMzMDUwNSwiZXhwIjoxNTcyMzM0MTA1LCJuYmYiOjE1NzIzMzA1MDUsImp0aSI6IlBzYmxkTWtPVWduVTdrSGYiLCJzdWIiOjIsInBydiI6ImNlNjM2MDFjMDc0Yzc5ZWIzM2Y1YjI5YWU2NGRmOTUxYzJjYTRhZjEifQ.wpEmWqF_BasbY0
+                    client:
+                      id: 1
+                      login_id: User
+                      password: $2y$10$DHcchiEiAOvIbwmFunVH2.aYB4IxXbZzFeNcl0f267VuOhfxUI.ju
+                      email: tyamada@example.com
+                      full_name: 山田 太郎
+                    first_survey_url: ''
                     status: success
         '401':
           description: Unauthorized
