@@ -431,6 +431,8 @@ paths:
                         category: 午前
                         name: ファイナンスセミナー
                         amount: 11000
+                        place: 都内
+                        content: XXXXについて講義します。
                       - id: 2
                         event_date: '2019-11-05'
                         start_time: '13:00'
@@ -438,6 +440,8 @@ paths:
                         category: 午後
                         name: ファイナンスセミナー
                         amount: 9800
+                        place: 都内
+                        content: XXXXについて講義します。
                     status: success
         '401':
           description: Unauthorized
@@ -511,7 +515,7 @@ paths:
               properties:
                 id:
                   type: array
-                  description: '講義・イベントスケジュールID'
+                  description: 講義・イベントスケジュールID
                   items: {}
                 type:
                   type: array
@@ -569,12 +573,16 @@ paths:
                         category: 午前
                         name: ファイナンスセミナー
                         type: 1
+                        place: 都内
+                        content: XXXXについて講義します。
                       - id: 3
                         event_date: '2019-11-10'
                         start_time: '13:00'
                         end_time: '15:00'
                         name: 投資イベント
                         type: 2
+                        place: 都内
+                        content: 知らないと損するXXXX。
                     status: success
         '401':
           description: Unauthorized
@@ -682,12 +690,16 @@ paths:
                         category: 午前
                         name: ファイナンスセミナー
                         type: 1
+                        place: 都内
+                        content: XXXXについて講義します。
                       - id: 3
                         event_date: '2019-11-10'
                         start_time: '13:00'
                         end_time: '15:00'
                         name: 投資イベント
                         type: 2
+                        place: 都内
+                        content: 知って得するXXXX術。
                     status: success
         '401':
           description: Unauthorized
@@ -741,12 +753,16 @@ paths:
                         end_time: '12:00'
                         name: 相談会
                         amount: 11000
+                        place: 都内
+                        content: XXXX相談会を開催します。
                       - id: 4
                         event_date: '2019-11-05'
                         start_time: '13:00'
                         end_time: '15:00'
                         name: 相談会
                         amount: 9800
+                        place: 都内
+                        content: XXXX相談会を開催します。
                     status: success
         '401':
           description: Unauthorized
@@ -1106,6 +1122,8 @@ components:
             name: 講義体験会
             amount: 9800
             type: 1
+            place: 都内
+            content: XXXXについて講義します。
         example-イベント:
           value:
             id: 2
@@ -1115,6 +1133,8 @@ components:
             name: 投資イベント
             amount: 9800
             type: 2
+            place: 都内
+            content: 知らないと損するXXXX。
       properties:
         id:
           type: integer
@@ -1140,6 +1160,12 @@ components:
         type:
           type: integer
           description: 講義・イベント区分
+        place:
+          type: string
+          description: 場所
+        content:
+          type: string
+          description: 詳細内容
       required:
         - id
         - event_date
@@ -1147,6 +1173,8 @@ components:
         - end_time
         - name
         - type
+        - place
+        - content
     faq_category:
       title: お問い合わせカテゴリー
       type: object
